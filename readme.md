@@ -27,8 +27,6 @@ A toy transaction engine that deals with deposits/withdrawals, as well as disput
 * Used floats despite a bad precision with mathematical operators adue to time constraints and an unfamiliar CSV/Serde package. 
   * Given more time I'd have implemented the Visitor trait to convert it to a u128 as a base data type and convert that back to a float for outputs.
 
-* The TX Identifier was not specified, so used unsigned 64 bit.
-
 * Using an unordered dataset (hashmap) for speed of finding value to key as we don't care about the order after we receive the transaction
 
 * A threaded design was not implemented as I felt it didn't make sense in the assignment text given with the time constraints. 

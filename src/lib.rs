@@ -26,7 +26,7 @@ pub struct Tx
 {
     pub r#type: TypeTx,
     pub client: u16,
-    pub tx: u64,
+    pub tx: u32,
     pub amount: Option<f64>
 }
 impl fmt::Display for Tx
@@ -54,7 +54,7 @@ pub struct Client
     /// Account of the client, with the client ID
     pub acc: Account,
     /// History of client transactions (deposits and withdrawals)
-    pub history: HashMap<u64,ClientTransaction>,
+    pub history: HashMap<u32,ClientTransaction>,
 }
 impl Client
 {
@@ -63,7 +63,7 @@ impl Client
     /// 
     /// # Arguments
     /// 
-    /// * 'name' - The Client ID, as a u64 
+    /// * 'name' - The Client ID, as a u32 
     pub fn new(id: u16) -> Client{
         Client { acc: Account::new(id), history:HashMap::new() }
     }
@@ -71,11 +71,11 @@ impl Client
     /// 
     /// # Arguments
     /// 
-    /// 'id' - The transaction ID, as u64
+    /// 'id' - The transaction ID, as u32
     /// 
     /// Realistically this could be a boolean check, but as I use it in
     /// tests later I decided to keep it like this
-    pub fn get_transaction(&self, id: &u64) -> Option<&ClientTransaction>
+    pub fn get_transaction(&self, id: &u32) -> Option<&ClientTransaction>
     {
         let out= match self.history.get(id)
         {
@@ -88,8 +88,8 @@ impl Client
     /// 
     /// # Arguments
     /// 
-    /// 'id' - The transaction ID, as u64
-    pub fn dispute_transaction(&mut self, id: &u64)
+    /// 'id' - The transaction ID, as u32
+    pub fn dispute_transaction(&mut self, id: &u32)
     {
         let try_tx = self.history.get_mut(id);
         match try_tx
@@ -110,8 +110,8 @@ impl Client
     /// 
     /// # Arguments
     /// 
-    /// 'id' - The transaction ID, as u64
-    pub fn resolve_transaction(&mut self, id: &u64)
+    /// 'id' - The transaction ID, as u32
+    pub fn resolve_transaction(&mut self, id: &u32)
     {
         if self.acc.locked == true{return;}
         let try_tx = self.history.get_mut(id);
@@ -133,8 +133,8 @@ impl Client
     /// 
     /// # Arguments
     /// 
-    /// 'id' - The transaction ID, as u64
-    pub fn chargeback_transaction(&mut self, id: &u64)
+    /// 'id' - The transaction ID, as u32
+    pub fn chargeback_transaction(&mut self, id: &u32)
     {
         if self.acc.locked == true{return;}
         let try_tx = self.history.get_mut(id);
@@ -212,7 +212,7 @@ impl fmt::Display for Account
 /// 
 /// # Arguments
 /// 
-/// * 'clients' - The list of clients that have been processed, as a HashMap<u64,Client>
+/// * 'clients' - The list of clients that have been processed, as a HashMap<u32,Client>
 pub fn write_output(clients: HashMap<u16, Client>)
 {
     let mut wrtr = csv::Writer::from_writer(io::stdout());
