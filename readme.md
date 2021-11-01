@@ -21,7 +21,7 @@ A toy transaction engine that deals with deposits/withdrawals, as well as disput
 (even if we don't get it as an input), as aposed to a cash deposit/withdrawal which would be from outside._
 
 * CSV input file is comma-delimited with no whitespace in headers or data
- * Any whitespace will be ignored
+ * Given any whitespace in a record, the record will be ignored
 
 
 ### Design choices
@@ -29,7 +29,7 @@ A toy transaction engine that deals with deposits/withdrawals, as well as disput
 * Used floats despite a bad precision with mathematical operators adue to time constraints and an unfamiliar CSV/Serde package. 
   * Given more time I'd have implemented the Visitor trait to convert it to a u128 as a base data type and convert that back to a float for outputs.
 
-* Using an unordered dataset (hashmap) for speed of finding value to key as we don't care about the order after we receive the transaction
+* Using an unordered dataset (hashmap) for speed of finding value to key as we don't care about the order after we store and print
 
 * A threaded design was not implemented as I felt it didn't make sense in the assignment text given with the time constraints. 
   * The inputs were chronological, which means using threads to process input records concurrently could lead to situations where E.G. a dispute is processed in a thread when it hasn't done processing in another, leading to the dispute being ignored even if it is valid. 
