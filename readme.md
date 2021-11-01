@@ -20,6 +20,8 @@ A toy transaction engine that deals with deposits/withdrawals, as well as disput
   * _This extends on the above assumption. This makes us infer that on an account every deposit has a withdrawal on another account
 (even if we don't get it as an input), as aposed to a cash deposit/withdrawal which would be from outside._
 
+* CSV input file is comma-delimited with no whitespace in headers or data
+ * Any whitespace will be ignored
 
 
 ### Design choices
